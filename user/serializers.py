@@ -2,7 +2,7 @@ from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework.serializers import ModelSerializer
 
-from user.models import CustomUser
+from user.models import AdUser
 
 
 class SignUpSerializer(ModelSerializer):
@@ -12,7 +12,7 @@ class SignUpSerializer(ModelSerializer):
         fields = ('username', 'email', 'password')
 
     def create(self, validated_data):
-        user = CustomUser.objects.create_user(
+        user = AdUser.objects.create_user(
             username=validated_data['username'],
             email=validated_data['email'],
             password=validated_data['password']
