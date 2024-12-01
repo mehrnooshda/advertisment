@@ -9,12 +9,13 @@ class SignUpSerializer(ModelSerializer):
     password = serializers.CharField(write_only=True, max_length=8)
 
     class Meta:
-        fields = ('username', 'email', 'password')
+        model = AdUser
+        fields = ('email', 'password')
 
     def create(self, validated_data):
         user = AdUser.objects.create_user(
-            username=validated_data['username'],
             email=validated_data['email'],
+            username = validated_data['email'] if validated_data['email'] else validated_data['username'],
             password=validated_data['password']
         )
         return user
