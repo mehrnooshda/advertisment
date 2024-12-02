@@ -27,8 +27,8 @@ class CommentSerializer(serializers.ModelSerializer):
 
 class AdSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
-    comment = CommentSerializer(many=True, read_only=True)
+    comments = CommentSerializer(many=True, read_only=True)
 
     class Meta:
         model = Ad
-        fields = ['id', 'title', 'owner', 'description', 'comment']
+        fields = ['id', 'title', 'owner', 'description', 'comments']
