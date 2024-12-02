@@ -53,6 +53,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+AUTHENTICATION_BACKENDS = [
+    'user.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+]
 ROOT_URLCONF = 'advertisement.urls'
 
 TEMPLATES = [
