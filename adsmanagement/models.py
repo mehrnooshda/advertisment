@@ -16,8 +16,11 @@ class Ad(models.Model):
 
 class Comment(models.Model):
     content = models.TextField()
-    ad_id = models.ForeignKey(Ad, on_delete=models.CASCADE)
-    user_id = models.ForeignKey(AdUser, on_delete=models.CASCADE)
+    ad = models.ForeignKey('Ad', on_delete=models.CASCADE, related_name='comments', default=0)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
+    class Meta:
+        ordering = ['-created_at']
+        unique_together = ('ad', 'owner')
     def __str__(self):
-        return self.content
+        return f"Comment by {self.owner} on {self.ad.title}"
