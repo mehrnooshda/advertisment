@@ -1,0 +1,511 @@
+{
+	"info": {
+		"_postman_id": "7df45822-2f7e-4dc1-a8b6-c1919d4efa2f",
+		"name": "advertisement",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28194975"
+	},
+	"item": [
+		{
+			"name": "SignUp",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"g9@gmail.com\",\n    \"username\":\"test_username\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/signup/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"signup",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "SignIn",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Check if the response is successful (status code 200)",
+							"if (pm.response.code === 200) {",
+							"    try {",
+							"        // Parse the response body as JSON",
+							"        const responseBody = pm.response.json();",
+							"",
+							"        // Get the access token from the response body",
+							"        const accessToken = responseBody.access;",
+							"",
+							"        // Set the access token in the Postman environment",
+							"        pm.environment.set('access', accessToken);",
+							"",
+							"        // Log the access token for verification (optional)",
+							"        console.log('Access Token:', accessToken);",
+							"    } catch (error) {",
+							"        console.error('Failed to extract access token:', error);",
+							"    }",
+							"} else {",
+							"    console.error('Sign-in request failed:', pm.response.code);",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"g5@gmail.com\",\n    \"password\": \"123\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/auth/signin/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"auth",
+						"signin",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Ad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\"title\": \"g1 ad title\",\n\"description\": \"hoho\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/ads/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ads",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Ads List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/ads/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ads",
+						""
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Ads List",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ads/",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ads",
+								""
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 02 Dec 2024 15:01:10 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.12.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, POST, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "620"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 7,\n        \"title\": \"g1 ad title\",\n        \"owner\": \"g2@gmail.com\",\n        \"description\": \"hoho\",\n        \"comments\": [\n            {\n                \"id\": 4,\n                \"content\": \"This is a great ad created by g2 cm by g7!\",\n                \"ad\": 7,\n                \"comment_owner\": \"g7@gmail.com\"\n            }\n        ]\n    },\n    {\n        \"id\": 6,\n        \"title\": \"g1 ad title\",\n        \"owner\": \"g1@gmail.com\",\n        \"description\": \"hoho\",\n        \"comments\": []\n    },\n    {\n        \"id\": 4,\n        \"title\": \"testad\",\n        \"owner\": \"g1@gmail.com\",\n        \"description\": \"\",\n        \"comments\": [\n            {\n                \"id\": 3,\n                \"content\": \"This is a great ad4!\",\n                \"ad\": 4,\n                \"comment_owner\": \"g2@gmail.com\"\n            }\n        ]\n    },\n    {\n        \"id\": 3,\n        \"title\": \"updated_title\",\n        \"owner\": \"g1@gmail.com\",\n        \"description\": \"cherte pert desc\",\n        \"comments\": [\n            {\n                \"id\": 1,\n                \"content\": \"This is a great ad!\",\n                \"ad\": 3,\n                \"comment_owner\": \"g2@gmail.com\"\n            }\n        ]\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Ad Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/ads/:id",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ads",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "7"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Ad Details",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ads/:id",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ads",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Date",
+							"value": "Mon, 02 Dec 2024 15:02:08 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "WSGIServer/0.2 CPython/3.12.3"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Accept"
+						},
+						{
+							"key": "Allow",
+							"value": "GET, PUT, PATCH, DELETE, HEAD, OPTIONS"
+						},
+						{
+							"key": "X-Frame-Options",
+							"value": "DENY"
+						},
+						{
+							"key": "Content-Length",
+							"value": "180"
+						},
+						{
+							"key": "X-Content-Type-Options",
+							"value": "nosniff"
+						},
+						{
+							"key": "Referrer-Policy",
+							"value": "same-origin"
+						},
+						{
+							"key": "Cross-Origin-Opener-Policy",
+							"value": "same-origin"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"id\": 3,\n    \"title\": \"updated_title\",\n    \"owner\": \"g1@gmail.com\",\n    \"description\": \"cherte pert desc\",\n    \"comments\": [\n        {\n            \"id\": 1,\n            \"content\": \"This is a great ad!\",\n            \"ad\": 3,\n            \"comment_owner\": \"g2@gmail.com\"\n        }\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Update Ad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"description\":\"g2 desc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/ads/:id/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ads",
+						":id",
+						""
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "3"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Ad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/ads/:id/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ads",
+						":id",
+						""
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "6"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retrieve Comments for Ad",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/ads/:int/comments",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"ads",
+						":int",
+						"comments"
+					],
+					"variable": [
+						{
+							"key": "int",
+							"value": "4"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Retrieve Comments for Ad",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/ads/:int/comments",
+							"host": [
+								"{{base_url}}"
+							],
+							"path": [
+								"ads",
+								":int",
+								"comments"
+							],
+							"variable": [
+								{
+									"key": "int",
+									"value": "4"
+								}
+							]
+						}
+					},
+					"_postman_previewlanguage": null,
+					"header": null,
+					"cookie": [],
+					"body": null
+				}
+			]
+		},
+		{
+			"name": "Add Commnet",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{access}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"ad\": 4,\n    \"content\": \"wow!!!! \"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/comments/",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"comments",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
