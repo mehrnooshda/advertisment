@@ -3,12 +3,12 @@ from rest_framework.permissions import AllowAny, IsAuthenticatedOrReadOnly, IsAu
 
 from adsmanagement.models import Ad
 from adsmanagement.serializers import AdSerializer
-
+from .permissions import IsOwnerOrReadOnly
 
 class AdViewSet(viewsets.ModelViewSet):
     queryset = Ad.objects.all().order_by('-created_at')
     serializer_class = AdSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
+    permission_classes = [IsAuthenticatedOrReadOnly, IsOwnerOrReadOnly]
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)

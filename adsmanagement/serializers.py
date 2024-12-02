@@ -7,4 +7,4 @@ class AdSerializer(serializers.ModelSerializer):
     owner = serializers.ReadOnlyField(source='owner.username')
     class Meta:
         model = Ad
-        fields = ['title', 'owner']
+        fields = ['id', 'title', 'owner', 'description']
