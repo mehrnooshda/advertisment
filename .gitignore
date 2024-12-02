@@ -26,7 +26,7 @@ __pycache__/
 *.env
 docker-compose.override.yml
 .dockerignore
-
+.venv
 # OS-specific files
 .DS_Store
 Thumbs.db
